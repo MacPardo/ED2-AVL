@@ -26,7 +26,6 @@ int main(){
 
     while(scanf("%d", &c), c >= 0){
         arvore = insere(arvore, c);
-        printf("vish....\n");
         imprime(arvore);
     }
 
@@ -49,8 +48,6 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     nodo->pai = pai;
     nodo->esq = nodo->dir = NULL;
     nodo->altura = 0;
-
-    printf("oh god why\n");
 
     TpNodo * aux;
 
@@ -77,21 +74,25 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
         aux = _insere(pai->dir, nodo);
         pai->dir = aux;
         pai->altdireita = pai->dir->altura;
-        pai->altura = max(pai->altdireita, pai->altesquerda);
+        pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
     }
     else if(pai->esq != NULL && nodo->chave <= pai->chave){
         //inserir nodo no filho da esquerda do nodo "pai"
         aux = _insere(pai->esq, nodo);
         pai->esq = aux;
         pai->altesquerda = pai->esq->altura;
-        pai->altura = max(pai->altdireita, pai->altesquerda);
+        pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
+    }
+
+    if(abs(pai->altesquerda - pai->altdireita) > 1){
+        //se o nodo "pai" não estiver balanceado
+
     }
 
     return pai;
 }
 
 TpArvore * insere(TpArvore * arvore, int chave){
-    printf("wtf dude\n");
     TpNodo * nodo = (TpNodo*)malloc(sizeof(TpNodo));
     nodo->chave = chave;
     arvore->raiz = _insere(arvore->raiz, nodo);
@@ -102,7 +103,7 @@ TpArvore * insere(TpArvore * arvore, int chave){
 void _imprime(TpNodo * nodo){
     if(nodo == NULL) return;
     for(int i = 0; i < nodo->nivel; i++)printf("    ");
-    printf("%d\n", nodo->chave);
+    printf("%d a:%d n:%d\n", nodo->chave, nodo->altura, nodo->nivel);
     _imprime(nodo->esq);
     _imprime(nodo->dir);
 }
