@@ -43,19 +43,19 @@ int max(int a, int b){
     return a > b ? a : b;
 }
 
-TpNodo * giroEsquerda(TpNodo * nodo){
+TpNodo * rightRight(TpNodo * nodo){
     return nodo;
 }
 
-TpNodo * giroDireita(TpNodo * nodo){
+TpNodo * leftLeft(TpNodo * nodo){
     return nodo;
 }
 
-TpNodo * giroEsquerdaDireita(TpNodo * nodo){
+TpNodo * rightLeft(TpNodo * nodo){
     return nodo;
 }
 
-TpNodo * giroDireitaEsquerda(TpNodo * nodo){
+TpNodo * leftRight(TpNodo * nodo){
     return nodo;
 }
 
@@ -77,7 +77,7 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
         pai->altdireita = 1;
         pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
     }
-    else if(pai->esq == NULL && nodo->chave <= pai->chave){
+    else if(pai->esq == NULL && nodo->chave < pai->chave){
         //inserir nodo diretamente à esquerda do nodo "pai"
         pai->esq = nodo;
         nodo->altura = nodo->altesquerda = nodo->altdireita = 0;
@@ -92,7 +92,7 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
         pai->altdireita = pai->dir->altura;
         pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
     }
-    else if(pai->esq != NULL && nodo->chave <= pai->chave){
+    else if(pai->esq != NULL && nodo->chave < pai->chave){
         //inserir nodo no filho da esquerda do nodo "pai"
         aux = _insere(pai->esq, nodo);
         pai->esq = aux;
