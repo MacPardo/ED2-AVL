@@ -19,7 +19,7 @@ void imprime(TpArvore * arvore);
 TpArvore * insere(TpArvore * arvore, int chave);
 
 int main(){
-    TpArvore *arvore = (TpArvore*)malloc(sizeof(TpArvore));
+    TpArvore * arvore = (TpArvore*)malloc(sizeof(TpArvore));
     arvore = inicializa();
 
     int c;
@@ -59,7 +59,7 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
         nodo->altura = nodo->altesquerda = nodo->altdireita = 0;
         nodo->nivel = pai->nivel + 1;
         pai->altdireita = 1;
-        pai->altura = max(pai->altdireita, pai->altesquerda);
+        pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
     }
     else if(pai->esq == NULL && nodo->chave <= pai->chave){
         //inserir nodo diretamente à esquerda do nodo "pai"
@@ -67,7 +67,7 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
         nodo->altura = nodo->altesquerda = nodo->altdireita = 0;
         nodo->nivel = pai->nivel + 1;
         pai->altesquerda = 1;
-        pai->altura = max(pai->altdireita, pai->altesquerda);
+        pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
     }
     else if(pai->dir != NULL && nodo->chave >= pai->chave){
         //inserir nodo no filho da direita do nodo "pai"
