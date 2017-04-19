@@ -43,6 +43,22 @@ int max(int a, int b){
     return a > b ? a : b;
 }
 
+TpNodo * giroEsquerda(TpNodo * nodo){
+    return nodo;
+}
+
+TpNodo * giroDireita(TpNodo * nodo){
+    return nodo;
+}
+
+TpNodo * giroEsquerdaDireita(TpNodo * nodo){
+    return nodo;
+}
+
+TpNodo * giroDireitaEsquerda(TpNodo * nodo){
+    return nodo;
+}
+
 /*-----função auxiliar para a função insere----*/
 TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     nodo->pai = pai;
