@@ -53,9 +53,6 @@ TpNodo * rightRight(TpNodo * nodo){
     a = nodo;
     b = nodo->dir;
 
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
     b->pai = a->pai;
     a->dir = b->esq;
     if(a->dir != NULL) a->dir->pai = a;
@@ -63,9 +60,7 @@ TpNodo * rightRight(TpNodo * nodo){
     b->esq = a;
 
     nodo = b;g
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
+
     return nodo;
 }
 
@@ -77,19 +72,12 @@ TpNodo * leftLeft(TpNodo * nodo){
 
     b->pai = a->pai;
     a->esq = b->dir;
-<<<<<<< HEAD
     if(a->esq != NULL) a->esq->pai = a;
-=======
     a->esq->pai = a;
->>>>>>> origin/master
     a->pai = b;
     b->dir = a;
 
     nodo = b;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
     return nodo;
 }
 
