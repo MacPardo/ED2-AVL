@@ -123,7 +123,7 @@ TpNodo * leftRight(TpNodo * nodo){
 TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     nodo->pai = pai;
     nodo->esq = nodo->dir = NULL;
-    nodo->altura = 0;
+    nodo->altura = nodo->altesquerda = nodo->altdireita = 0;
 
     TpNodo * aux;
 
@@ -132,7 +132,6 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     if(pai->dir == NULL && nodo->chave >= pai->chave){
         //inserir nodo diretamente à direita do nodo "pai"
         pai->dir = nodo;
-        nodo->altura = nodo->altesquerda = nodo->altdireita = 0;
         nodo->nivel = pai->nivel + 1;
         pai->altdireita = 1;
         pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
@@ -140,7 +139,6 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     else if(pai->esq == NULL && nodo->chave < pai->chave){
         //inserir nodo diretamente à esquerda do nodo "pai"
         pai->esq = nodo;
-        nodo->altura = nodo->altesquerda = nodo->altdireita = 0;
         nodo->nivel = pai->nivel + 1;
         pai->altesquerda = 1;
         pai->altura = max(pai->altdireita, pai->altesquerda) + 1;
