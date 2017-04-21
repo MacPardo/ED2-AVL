@@ -47,6 +47,20 @@ int max(int a, int b){
     return a > b ? a : b;
 }
 
+void incrementaNivel(TpNodo * nodo){
+    if(nodo == NULL) return;
+    nodo->nivel++;
+    incrementaNivel(nodo->dir);
+    incrementaNivel(nodo->esq);
+}
+
+void decrementaNivel(TpNodo * nodo){
+    if(nodo == NULL) return;
+    nodo->nivel--;
+    decrementaNivel(nodo->dir);
+    decrementaNivel(nodo->esq);
+}
+
 TpNodo * rightRight(TpNodo * nodo){
     TpNodo * a, * b;
 
