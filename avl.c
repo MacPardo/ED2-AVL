@@ -18,6 +18,7 @@ TpArvore * inicializa();
 void imprime(TpArvore * arvore);
 TpArvore * insere(TpArvore * arvore, int chave);
 TpNodo * rightRight(TpNodo * rightRight);
+int checarBalanceamento(TpArvore * arvore);
 
 int main(){
     TpArvore * arvore = (TpArvore*)malloc(sizeof(TpArvore));
@@ -30,13 +31,16 @@ int main(){
         imprime(arvore);
     }
 
-    arvore->raiz = rightRight(arvore->raiz);
-    imprime(arvore);
+    printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
+
+    //arvore->raiz = rightRight(arvore->raiz);
+    //imprime(arvore);
 
     return 0;
 }
 
-TpArvore * inicializa(){//aloca memoria para inicializar a arvore
+TpArvore * inicializa(){
+    //aloca memoria para inicializar a arvore
     TpArvore *arvore = (TpArvore*)malloc(sizeof(TpArvore));
     arvore->raiz = NULL;
     return arvore;
@@ -48,6 +52,7 @@ int max(int a, int b){
 }
 
 void incrementaNivel(TpNodo * nodo){
+    //incrementa o nivel do nodo e seus descendentes
     if(nodo == NULL) return;
     nodo->nivel++;
     incrementaNivel(nodo->dir);
@@ -55,6 +60,7 @@ void incrementaNivel(TpNodo * nodo){
 }
 
 void decrementaNivel(TpNodo * nodo){
+    //decrementa o nivel do nodo e seus descendentes
     if(nodo == NULL) return;
     nodo->nivel--;
     decrementaNivel(nodo->dir);
@@ -194,4 +200,16 @@ void _imprime(TpNodo * nodo){
 
 void imprime(TpArvore * arvore){
     _imprime(arvore->raiz);
+}
+
+/*-----função auxiliar para a função checarAvl----*/
+int _checarBalanceamento(TpNodo * nodo){
+    if(nodo == NULL) return 1;
+    if(abs(nodo->altdireita - nodo->altesquerda) > 1) return 0;
+    return _checarBalanceamento(nodo->dir) && _checarBalanceamento(nodo->esq);
+}
+
+int checarBalanceamento(TpArvore * arvore){
+    //checa se a árvore está balanceada
+    return _checarBalanceamento(arvore->raiz);
 }
