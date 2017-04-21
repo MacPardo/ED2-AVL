@@ -59,7 +59,7 @@ TpNodo * rightRight(TpNodo * nodo){
     a->pai = b;
     b->esq = a;
 
-    nodo = b;
+    nodo = b;g
 
     return nodo;
 }
@@ -72,21 +72,39 @@ TpNodo * leftLeft(TpNodo * nodo){
 
     b->pai = a->pai;
     a->esq = b->dir;
+    if(a->esq != NULL) a->esq->pai = a;
     a->esq->pai = a;
     a->pai = b;
     b->dir = a;
 
     nodo = b;
-
     return nodo;
 }
 
 /*
 TpNodo * rightLeft(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->dir;
+
+    b = leftLeft(b);
+    a = rightRight(a);
+
+    nodo = b;
     return nodo;
 }
 
 TpNodo * leftRight(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->esq;
+
+    b = rightRight(b);
+    a = leftLeft(a);
+
+    nodo = b;
     return nodo;
 }
 */
