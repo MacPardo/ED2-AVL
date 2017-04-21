@@ -17,6 +17,7 @@ typedef struct _arvore{
 TpArvore * inicializa();
 void imprime(TpArvore * arvore);
 TpArvore * insere(TpArvore * arvore, int chave);
+TpNodo * rightRight(TpNodo * rightRight);
 
 int main(){
     TpArvore * arvore = (TpArvore*)malloc(sizeof(TpArvore));
@@ -28,6 +29,9 @@ int main(){
         arvore = insere(arvore, c);
         imprime(arvore);
     }
+
+    arvore->raiz = rightRight(arvore->raiz);
+    imprime(arvore);
 
     return 0;
 }
@@ -44,13 +48,40 @@ int max(int a, int b){
 }
 
 TpNodo * rightRight(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->dir;
+
+    b->pai = a->pai;
+    a->dir = b->esq;
+    if(a->dir != NULL) a->dir->pai = a;
+    a->pai = b;
+    b->esq = a;
+
+    nodo = b;
+
     return nodo;
 }
 
 TpNodo * leftLeft(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->esq;
+
+    b->pai = a->pai;
+    a->esq = b->dir;
+    a->esq->pai = a;
+    a->pai = b;
+    b->dir = a;
+
+    nodo = b;
+
     return nodo;
 }
 
+/*
 TpNodo * rightLeft(TpNodo * nodo){
     return nodo;
 }
@@ -58,6 +89,7 @@ TpNodo * rightLeft(TpNodo * nodo){
 TpNodo * leftRight(TpNodo * nodo){
     return nodo;
 }
+*/
 
 /*-----função auxiliar para a função insere----*/
 TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
