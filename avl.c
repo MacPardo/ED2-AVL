@@ -144,13 +144,13 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     else if(pai->dir != NULL && nodo->chave >= pai->chave){
         //inserir nodo no filho da direita do nodo "pai"
         pai->dir = _insere(pai->dir, nodo);
-        pai->altdireita = pai->dir->altura;
+        pai->altdireita = pai->dir->altura + 1;
         pai->altura = max(pai->altdireita, pai->altesquerda);
     }
     else if(pai->esq != NULL && nodo->chave < pai->chave){
         //inserir nodo no filho da esquerda do nodo "pai"
         pai->esq = _insere(pai->esq, nodo);
-        pai->altesquerda = pai->esq->altura;
+        pai->altesquerda = pai->esq->altura + 1;
         pai->altura = max(pai->altdireita, pai->altesquerda);
     }
 
