@@ -44,18 +44,62 @@ int max(int a, int b){
 }
 
 TpNodo * rightRight(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->dir;
+
+    
+
+    b->pai = a->pai;
+    a->dir = b->esq;
+    if(a->dir != NULL) a->dir->pai = a;
+    a->pai = b;
+    b->esq = a;
+
+    nodo = b;
     return nodo;
 }
 
 TpNodo * leftLeft(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->esq;
+
+    b->pai = a->pai;
+    a->esq = b->dir;
+    if(a->esq != NULL) a->esq->pai = a;
+    a->pai = b;
+    b->dir = a;
+
+    nodo = b;
     return nodo;
 }
 
 TpNodo * rightLeft(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->dir;
+
+    b = leftLeft(b);
+    a = rightRight(a);
+
+    nodo = b;
     return nodo;
 }
 
 TpNodo * leftRight(TpNodo * nodo){
+    TpNodo * a, * b;
+
+    a = nodo;
+    b = nodo->esq;
+
+    b = rightRight(b);
+    a = leftLeft(a);
+
+    nodo = b;
     return nodo;
 }
 
