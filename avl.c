@@ -125,8 +125,6 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     nodo->esq = nodo->dir = NULL;
     nodo->altura = nodo->altesquerda = nodo->altdireita = 0;
 
-    TpNodo * aux;
-
     if(pai == NULL) return nodo;
 
     if(pai->dir == NULL && nodo->chave >= pai->chave){
@@ -145,15 +143,13 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     }
     else if(pai->dir != NULL && nodo->chave >= pai->chave){
         //inserir nodo no filho da direita do nodo "pai"
-        aux = _insere(pai->dir, nodo);
-        pai->dir = aux;
+        pai->dir = _insere(pai->dir, nodo);
         pai->altdireita = pai->dir->altura;
         pai->altura = max(pai->altdireita, pai->altesquerda);
     }
     else if(pai->esq != NULL && nodo->chave < pai->chave){
         //inserir nodo no filho da esquerda do nodo "pai"
-        aux = _insere(pai->esq, nodo);
-        pai->esq = aux;
+        pai->esq = _insere(pai->esq, nodo);
         pai->altesquerda = pai->esq->altura;
         pai->altura = max(pai->altdireita, pai->altesquerda);
     }
