@@ -53,13 +53,18 @@ TpNodo * rightRight(TpNodo * nodo){
     a = nodo;
     b = nodo->dir;
 
+    b->nivel--;
+    a->nivel++;
+    if(a->esq != NULL) a->esq->nivel++;
+    b->dir->nivel--;
+
     b->pai = a->pai;
     a->dir = b->esq;
     if(a->dir != NULL) a->dir->pai = a;
     a->pai = b;
     b->esq = a;
 
-    nodo = b;g
+    nodo = b;
 
     return nodo;
 }
@@ -69,6 +74,11 @@ TpNodo * leftLeft(TpNodo * nodo){
 
     a = nodo;
     b = nodo->esq;
+
+    b->nivel--;
+    a->nivel++;
+    if(a->dir != NULL) a->dir->nivel++;
+    b->esq->nivel--;
 
     b->pai = a->pai;
     a->esq = b->dir;
