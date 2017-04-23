@@ -288,8 +288,8 @@ int checarBalanceamento(TpArvore * arvore){
 /*-----função auxiliar para a função freeArvore----*/
 void _freeArovre(TpNodo * nodo){
     if(nodo == NULL) return;
-    free(nodo->dir);
-    free(nodo->esq);
+    _freeArovre(nodo->dir);
+    _freeArovre(nodo->esq);
     free(nodo);
 }
 
