@@ -194,7 +194,7 @@ TpNodo * leftRight(TpNodo * nodo){
 
 TpNodo * balancearNodo(TpNodo * nodo){
     int bal = nodo->altdireita - nodo->altesquerda;
-    int dbal = nodo->dir == NULL ? 0 : 
+    int dbal = nodo->dir == NULL ? 0 :
         nodo->dir->altdireita - nodo->dir->altesquerda;
     int ebal = nodo->esq == NULL ? 0 :
         nodo->esq->altdireita - nodo->esq->altesquerda;
@@ -264,7 +264,7 @@ void _imprime(TpNodo * nodo){
     if(nodo == NULL) return;
     _imprime(nodo->dir);
     for(int i = 0; i < nodo->nivel; i++)printf("    ");
-    printf("%d a:%d n:%d ae:%d ad:%d\n", nodo->chave, nodo->altura, 
+    printf("%d a:%d n:%d ae:%d ad:%d\n", nodo->chave, nodo->altura,
             nodo->nivel, nodo->altesquerda, nodo->altdireita);
     _imprime(nodo->esq);
 }
@@ -288,8 +288,8 @@ int checarBalanceamento(TpArvore * arvore){
 /*-----função auxiliar para a função freeArvore----*/
 void _freeArovre(TpNodo * nodo){
     if(nodo == NULL) return;
-    free(nodo->dir);
-    free(nodo->esq);
+    _freeArovre(nodo->dir);
+    _freeArovre(nodo->esq);
     free(nodo);
 }
 
@@ -299,7 +299,7 @@ void freeArvore(TpArvore * arvore){
 
 TpArvore * inserirAutomaticamente(TpArvore * arvore){
     for(int i = 0; i < QTD_INSERCOES; i++){
-        arvore = insere(arvore, 
+        arvore = insere(arvore,
                 rand() % (LIMITE_SUPERIOR - LIMITE_INFERIOR) + LIMITE_INFERIOR);
     }
     return arvore;
