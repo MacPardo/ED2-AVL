@@ -31,13 +31,32 @@ int main(){
     arvore = inicializa();
 
     int c;
+    int opcao;
 
-    while(scanf("%d", &c), c >= 0){
-        arvore = insere(arvore, c);
-        printf("\n");
-        imprime(arvore);
-        printf("\n");
-    }
+    do{
+        printf("1 - Iniserir um elemento\n");
+        printf("2 - Listar os elementos inseridos\n");
+        printf("0 - Finalizar o programa\n");
+
+        scanf("%d", &opcao);
+
+        switch(opcao){
+            case 1:
+                printf("chave: ");
+                scanf("%d", &c);
+                arvore = insere(arvore, c);
+                break;
+            case 2:
+                printf("\n");
+                imprime(arvore);
+                printf("\n");
+                break;
+            case 0:
+                break;
+            default:
+                printf("\nEscolha uma opção válida!\n\n");
+        }
+    }while(opcao != 0);
 
     return 0;
 }
