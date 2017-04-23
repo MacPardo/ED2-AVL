@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define LIMITE_INFERIOR  1000
-#define LIMITE_SUPERIOR -1000
+#define LIMITE_INFERIOR -1000
+#define LIMITE_SUPERIOR  1000
 #define QTD_INSERCOES 100
 
 typedef struct _nodo{
@@ -300,7 +300,7 @@ void freeArvore(TpArvore * arvore){
 TpArvore * inserirAutomaticamente(TpArvore * arvore){
     for(int i = 0; i < QTD_INSERCOES; i++){
         arvore = insere(arvore, 
-                rand() % (LIMITE_SUPERIOR - LIMITE_INFERIOR) - LIMITE_INFERIOR);
+                rand() % (LIMITE_SUPERIOR - LIMITE_INFERIOR) + LIMITE_INFERIOR);
     }
     return arvore;
 }
