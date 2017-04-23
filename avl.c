@@ -16,6 +16,7 @@ typedef struct _arvore{
 
 TpArvore * inicializa();
 void imprime(TpArvore * arvore);
+void _imprime(TpNodo * nodo);
 TpArvore * insere(TpArvore * arvore, int chave);
 TpNodo * rightRight(TpNodo * rightRight);
 int checarBalanceamento(TpArvore * arvore);
@@ -31,40 +32,35 @@ int main(){
 
     int c;
 
-    printf("testar rightRight\n");
-    while(scanf("%d", &c), c >= 0){
-        arvore = insere(arvore, c);
-        imprime(arvore);
-    }
-
-    arvore->raiz = rightRight(arvore->raiz);
-    imprime(arvore);
-
-    printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
-
-
     arvore = inicializa();
     printf("testar leftLeft\n");
     while(scanf("%d", &c), c >= 0){
         arvore = insere(arvore, c);
+        printf("\n");
         imprime(arvore);
+        printf("\n");
     }
 
     arvore->raiz = leftLeft(arvore->raiz);
+    printf("\n");
     imprime(arvore);
+    printf("\n");
 
     printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
-
 
     arvore = inicializa();
     printf("testar rightLeft\n");
     while(scanf("%d", &c), c >= 0){
         arvore = insere(arvore, c);
+        printf("\n");
         imprime(arvore);
+        printf("\n");
     }
 
     arvore->raiz = rightLeft(arvore->raiz);
+    printf("\n");
     imprime(arvore);
+    printf("\n");
 
     printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
 
@@ -77,7 +73,9 @@ int main(){
     }
 
     arvore->raiz = leftRight(arvore->raiz);
+    printf("\n");
     imprime(arvore);
+    printf("\n");
 
     printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
 
@@ -131,7 +129,7 @@ TpNodo * rightRight(TpNodo * nodo){
 
     a->altdireita = a->dir == NULL ? 0 : a->dir->altura + 1;
     a->altura = max(a->altdireita, a->altesquerda);
-    a->altesquerda = a->altura + 1;
+    b->altesquerda = a->altura + 1;
     b->altdireita = b->dir == NULL ? 0 : b->dir->altura + 1;
     b->altura = max(b->altdireita, b->altesquerda);
 
@@ -158,11 +156,8 @@ TpNodo * leftLeft(TpNodo * nodo){
     b->dir = a;
 
     a->altesquerda = a->esq == NULL ? 0 : a->esq->altura + 1;
-    b->altesquerda = b->esq == NULL ? 0 : b->esq->altura + 1;
-
-    a->altesquerda = a->esq == NULL ? 0 : a->esq->altura + 1;
     a->altura = max(a->altdireita, a->altesquerda);
-    a->altdireita = a->altura + 1;
+    b->altdireita = a->altura + 1;
     b->altesquerda = b->esq == NULL ? 0 : b->esq->altura + 1;
     b->altura = max(b->altdireita, b->altesquerda);
 
@@ -176,9 +171,14 @@ TpNodo * rightLeft(TpNodo * nodo){
     a = nodo;
     b = nodo->dir;
 
+    printf("before rightLeft\n");
+    _imprime(a);
+
     b = leftLeft(b);
+    a->dir = b;
     a->altdireita = b->altura + 1;
     a->altura = max(a->altdireita, a->altesquerda);
+    printf("A => a:%d ae:%d ad:%d\n", a->altura, a->altesquerda, a->altdireita);
     a = rightRight(a);
 
     nodo = b;
@@ -192,6 +192,7 @@ TpNodo * leftRight(TpNodo * nodo){
     b = nodo->esq;
 
     b = rightRight(b);
+    a->esq = b;
     a->altesquerda = b->altura + 1;
     a->altura = max(a->altdireita, a->altesquerda);
     a = leftLeft(a);
@@ -255,7 +256,8 @@ void _imprime(TpNodo * nodo){
     if(nodo == NULL) return;
     _imprime(nodo->dir);
     for(int i = 0; i < nodo->nivel; i++)printf("    ");
-    printf("%d a:%d n:%d\n", nodo->chave, nodo->altura, nodo->nivel);
+    printf("%d a:%d n:%d ae:%d ad:%d\n", nodo->chave, nodo->altura, 
+            nodo->nivel, nodo->altesquerda, nodo->altdireita);
     _imprime(nodo->esq);
 }
 
