@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
+#define LIMITE_INFERIOR  1000
+#define LIMITE_SUPERIOR -1000
+#define QTD_INSERCOES 100
 
 typedef struct _nodo{
     int chave;
@@ -16,15 +21,10 @@ typedef struct _arvore{
 
 TpArvore * inicializa();
 void imprime(TpArvore * arvore);
-void _imprime(TpNodo * nodo);
 TpArvore * insere(TpArvore * arvore, int chave);
-TpNodo * rightRight(TpNodo * rightRight);
 int checarBalanceamento(TpArvore * arvore);
-
-TpNodo * rightRight(TpNodo * nodo);
-TpNodo * leftLeft(TpNodo * nodo);
-TpNodo * rightLeft(TpNodo * nodo);
-TpNodo * leftRight(TpNodo * nodo);
+void freeArvore(TpArvore * arvore);
+TpArvore * inserirAutomaticamente(TpArvore * arvore);
 
 int main(){
     TpArvore * arvore = (TpArvore*)malloc(sizeof(TpArvore));
@@ -33,9 +33,13 @@ int main(){
     int c;
     int opcao;
 
+    srand((unsigned)time(NULL));
+
     do{
         printf("1 - Iniserir um elemento\n");
         printf("2 - Listar os elementos inseridos\n");
+        printf("3 - Realizar 100 inserções automaticamente\n");
+        printf("4 - Testar se está balanceado\n");
         printf("0 - Finalizar o programa\n");
 
         scanf("%d", &opcao);
@@ -51,12 +55,24 @@ int main(){
                 imprime(arvore);
                 printf("\n");
                 break;
+            case 3:
+                arvore = inserirAutomaticamente(arvore);
+                break;
+            case 4:
+                if(checarBalanceamento(arvore)) printf("\nbalanceado!\n\n");
+                else printf("\nNão está balanceado!!\n\n");
+                break;
             case 0:
+                printf("saindo...\n");
                 break;
             default:
                 printf("\nEscolha uma opção válida!\n\n");
         }
     }while(opcao != 0);
+
+    freeArvore(arvore);
+    //a memória foi liberada antes do fim do programa apenas por
+    //boa prática, já que o sistema operacional já faz isso
 
     return 0;
 }
@@ -199,6 +215,11 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
 
     if(pai == NULL) return nodo;
 
+    if(nodo->chave == pai->chave){
+        free(nodo);
+        return pai;
+    }
+
     if(pai->dir == NULL && nodo->chave >= pai->chave){
         //inserir nodo diretamente à direita do nodo "pai"
         pai->dir = nodo;
@@ -262,4 +283,24 @@ int _checarBalanceamento(TpNodo * nodo){
 int checarBalanceamento(TpArvore * arvore){
     //checa se a árvore está balanceada
     return _checarBalanceamento(arvore->raiz);
+}
+
+/*-----função auxiliar para a função freeArvore----*/
+void _freeArovre(TpNodo * nodo){
+    if(nodo == NULL) return;
+    free(nodo->dir);
+    free(nodo->esq);
+    free(nodo);
+}
+
+void freeArvore(TpArvore * arvore){
+    _freeArovre(arvore->raiz);
+}
+
+TpArvore * inserirAutomaticamente(TpArvore * arvore){
+    for(int i = 0; i < QTD_INSERCOES; i++){
+        arvore = insere(arvore, 
+                rand() % (LIMITE_SUPERIOR - LIMITE_INFERIOR) - LIMITE_INFERIOR);
+    }
+    return arvore;
 }
