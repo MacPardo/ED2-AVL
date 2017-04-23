@@ -131,14 +131,10 @@ TpNodo * rightLeft(TpNodo * nodo){
     a = nodo;
     b = nodo->dir;
 
-    printf("before rightLeft\n");
-    _imprime(a);
-
     b = leftLeft(b);
     a->dir = b;
     a->altdireita = b->altura + 1;
     a->altura = max(a->altdireita, a->altesquerda);
-    printf("A => a:%d ae:%d ad:%d\n", a->altura, a->altesquerda, a->altdireita);
     a = rightRight(a);
 
     nodo = b;
@@ -211,7 +207,7 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
         pai->altura = max(pai->altdireita, pai->altesquerda);
     }
 
-    nodo = balancearNodo(nodo);
+    pai = balancearNodo(pai);
 
     return pai;
 }
