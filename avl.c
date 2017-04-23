@@ -264,7 +264,7 @@ void _imprime(TpNodo * nodo){
     if(nodo == NULL) return;
     _imprime(nodo->dir);
     for(int i = 0; i < nodo->nivel; i++)printf("    ");
-    printf("%d a:%d n:%d ae:%d ad:%d\n", nodo->chave, nodo->altura,
+    printf("%d a:%d n:%d ae:%d ad:%d\n", nodo->chave, nodo->altura, 
             nodo->nivel, nodo->altesquerda, nodo->altdireita);
     _imprime(nodo->esq);
 }
