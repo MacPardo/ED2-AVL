@@ -32,52 +32,12 @@ int main(){
 
     int c;
 
-    arvore = inicializa();
-    printf("testar leftLeft\n");
     while(scanf("%d", &c), c >= 0){
         arvore = insere(arvore, c);
         printf("\n");
         imprime(arvore);
         printf("\n");
     }
-
-    arvore->raiz = leftLeft(arvore->raiz);
-    printf("\n");
-    imprime(arvore);
-    printf("\n");
-
-    printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
-
-    arvore = inicializa();
-    printf("testar rightLeft\n");
-    while(scanf("%d", &c), c >= 0){
-        arvore = insere(arvore, c);
-        printf("\n");
-        imprime(arvore);
-        printf("\n");
-    }
-
-    arvore->raiz = rightLeft(arvore->raiz);
-    printf("\n");
-    imprime(arvore);
-    printf("\n");
-
-    printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
-
-
-    arvore = inicializa();
-    printf("testar leftRight\n");
-    while(scanf("%d", &c), c >= 0){
-        arvore = insere(arvore, c);
-        imprime(arvore);
-    }
-
-    arvore->raiz = leftRight(arvore->raiz);
-    printf("\n");
-    imprime(arvore);
-    printf("\n");
-
-    printf("%s\n", checarBalanceamento(arvore) ? "balanceada" : "não balanceada");
 
     return 0;
 }
@@ -201,6 +161,21 @@ TpNodo * leftRight(TpNodo * nodo){
     return nodo;
 }
 
+TpNodo * balancearNodo(TpNodo * nodo){
+    int bal = nodo->altdireita - nodo->altesquerda;
+    int dbal = nodo->dir == NULL ? 0 : 
+        nodo->dir->altdireita - nodo->dir->altesquerda;
+    int ebal = nodo->esq == NULL ? 0 :
+        nodo->esq->altdireita - nodo->esq->altesquerda;
+
+    if(bal > 1 && dbal >= 1) return rightRight(nodo);
+    if(bal > 1 && dbal <= -1) return rightLeft(nodo);
+    if(bal < -1 && ebal <= -1) return leftLeft(nodo);
+    if(bal < -1 && ebal >= 1) return leftRight(nodo);
+
+    return nodo;
+}
+
 /*-----função auxiliar para a função insere----*/
 TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
     nodo->pai = pai;
@@ -236,10 +211,7 @@ TpNodo * _insere(TpNodo * pai, TpNodo * nodo){
         pai->altura = max(pai->altdireita, pai->altesquerda);
     }
 
-    if(abs(pai->altesquerda - pai->altdireita) > 1){
-        //se o nodo "pai" não estiver balanceado
-
-    }
+    nodo = balancearNodo(nodo);
 
     return pai;
 }
